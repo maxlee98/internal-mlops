@@ -5,6 +5,6 @@ conda_env: conda.yaml
 
 entry_points:
   main:
-    command: "python train_race.py" # give the path
+    command: "python experiments/train_race.py" # give the path
 
 # Refer to MLflow Project page https://mlflow.org/docs/latest/projects.html

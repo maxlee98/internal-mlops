@@ -18,9 +18,9 @@ import mlflow
 
 RANDOM_SEED = 42
 
-current_dir = os.getcwd()
-data_fldr = os.path.join(current_dir, "data")
-out_dir = os.path.join(current_dir, "data", "output")
+current_dir = os.path.dirname(os.path.realpath(__file__))
+data_fldr = os.path.join(current_dir, "..", "data")
+out_dir = os.path.join(current_dir, "..", "data", "output")
 
 coe_df = pd.read_excel(os.path.join(data_fldr, "COE_Export.xlsx"), sheet_name="Yearly")
 pp_df = pd.read_excel(os.path.join(data_fldr, "Population.xlsx"), sheet_name="Consolidate")
