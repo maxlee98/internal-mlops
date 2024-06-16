@@ -1,4 +1,4 @@
-name: COE_Prediction
+name: COE_Prediction-Race
 
 # python_env: python_env.yaml
 conda_env: conda.yaml

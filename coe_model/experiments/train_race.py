@@ -74,7 +74,7 @@ grid_forest = GridSearchCV(
 
 model_forest = grid_forest.fit(X_train, y_train)
 
-mlflow.set_experiment("COE_Prediction")
+mlflow.set_experiment("COE_Prediction-Race")
 
 # Model evelaution metrics
 def eval_metrics(actual, pred):
@@ -88,7 +88,7 @@ def eval_metrics(actual, pred):
 def mlflow_logging(model, X, y, name):
     
      with mlflow.start_run() as run:
-        mlflow.set_tracking_uri("http://127.0.0.1:5000/")
+        mlflow.set_tracking_uri("http://127.0.0.1:8080/")
         run_id = run.info.run_id
         mlflow.set_tag("run_id", run_id)      
 
@@ -120,6 +120,20 @@ def mlflow_logging(model, X, y, name):
         mlflow.log_metric("Root Mean Squared Error", mse**0.5)
         mlflow.log_metric("Mean Absolute Error", mae)
         mlflow.log_metric("R-Square Score", r2)
+
+        # Plot predictions vs actuals
+        plt.figure(figsize=(12, 6))
+        plt.plot(y.index, y, label='Actual', color='blue')
+        plt.plot(y.index, pred, label='Prediction', linestyle='--', color='red')
+        plt.title('Predictions vs Actuals')
+        plt.xlabel('Index')
+        plt.ylabel('Value')
+        plt.legend()
+        plt.grid(True)
+        
+        # Save the plot as an artifact
+        plt.savefig(f'{name}-predictions_vs_actuals.png')
+        mlflow.log_artifact(f'{name}-predictions_vs_actuals.png')
 
         # Logging artifacts and model
         # mlflow.log_artifact("plots/ROC_curve.png")
