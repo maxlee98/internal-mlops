@@ -27,7 +27,7 @@ pp_df = pd.read_excel(os.path.join(data_fldr, "Population.xlsx"), sheet_name="Co
 
 coe_cat_df = coe_df.loc[coe_df['Category'] == "A", :]
 coe_pp = pd.merge(left=coe_cat_df, right=pp_df, left_on="Year", right_on="Year", how="left")
-coe_pp_drop = coe_pp.drop(['Year','Category',], axis=1).drop([24], axis=0)
+coe_pp_drop = coe_pp.drop(['Category',], axis=1).drop([24], axis=0).set_index("Year")
 
 def log_scale(X):
     return np.log1p(X)
@@ -132,7 +132,7 @@ def mlflow_logging(model, X, y, name):
         plt.grid(True)
         
         # Save the plot as an artifact
-        plt.savefig(f'{name}-predictions_vs_actuals.png')
+        # plt.savefig(f'{name}-predictions_vs_actuals.png')
         mlflow.log_artifact(f'{name}-predictions_vs_actuals.png')
 
         # Logging artifacts and model
